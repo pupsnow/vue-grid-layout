@@ -3,6 +3,7 @@
          class="vue-grid-item"
          :class="{ 'vue-resizable' : resizable, 'resizing' : isResizing, 'vue-draggable-dragging' : isDragging, 'cssTransforms' : useCssTransforms, 'render-rtl' : renderRtl }"
          :style="style"
+         @click="onClickHandler"
     >
         <slot></slot>
         <span v-if="resizable" ref="handle" :class="resizableHandleClass"></span>
@@ -33,7 +34,7 @@
     }
 
     .vue-grid-item.vue-draggable-dragging {
-        transition:none;
+        transition: none;
         z-index: 3;
     }
 
@@ -214,7 +215,7 @@
                 previousY: null,
             }
         },
-        created () {
+        created() {
             var self = this;
 
             // Accessible refernces of functions for removing in beforeDestroy
@@ -265,7 +266,7 @@
                 document.getElementsByTagName("html")[0].getAttribute("dir");
             this.rtl = (direction === "rtl");
         },
-        beforeDestroy: function(){
+        beforeDestroy: function () {
             var self = this;
             //Remove listeners
             this.eventBus.$off('updateWidth', self.updateWidthHandler);
@@ -336,7 +337,7 @@
                         edges: {left: false, right: true, bottom: true, top: false},
                         ignoreFrom: this.resizeIgnoreFrom
                     };
-                    
+
                     this.interactObj.resizable(opts);
                     if (!this.resizeEventSet) {
                         this.resizeEventSet = true;
@@ -389,6 +390,9 @@
             }
         },
         methods: {
+            onClickHandler: function () {
+                this.$emit("itemclick", this.i);
+            },
             createStyle: function () {
                 if (this.x + this.w > this.cols) {
                     this.x = 0;
