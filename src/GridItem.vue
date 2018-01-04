@@ -391,7 +391,7 @@
         },
         methods: {
             onClickHandler: function () {
-                this.$emit("itemclick", this.i);
+                this.$emit("itemclick", this);
             },
             createStyle: function () {
                 if (this.x + this.w > this.cols) {
